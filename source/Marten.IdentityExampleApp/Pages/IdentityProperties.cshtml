@@ -1,0 +1,64 @@
+﻿@page
+@model Marten.IdentityExampleApp.Pages.IdentityProperties
+
+@if (User.Identity!.IsAuthenticated)
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Property</th>
+            <th scope="col">Value</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">User.Identity.Name</th>
+            <td>@User.Identity.Name</td>
+        </tr>
+        <tr>
+            <th scope="row">User.Identity.IsAuthenticated</th>
+            <td>@User.Identity.IsAuthenticated</td>
+        </tr>
+        <tr>
+            <th scope="row">User.Identity.AuthenticationType</th>
+            <td>@User.Identity.AuthenticationType</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <h5>Identites:</h5>
+
+    @foreach (var identity in User.Identities)
+    {
+        <div>Name: @identity.Name </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Value</th>
+                <th scope="col">Value type</th>
+                <th scope="col">Issuer</th>
+            </tr>
+
+            </thead>
+            <tbody>
+
+            @foreach (var claim in identity.Claims)
+            {
+                <tr>
+                    <th scope="row">@claim.Type</th>
+                    <td>@claim.Value</td>
+                    <td>@claim.ValueType</td>
+                    <td>@claim.Issuer</td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+
+        <hr/>
+    }
+}
