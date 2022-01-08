@@ -1,0 +1,16 @@
+﻿@page
+@model Marten.IdentityExampleApp.Pages.Index
+
+
+<div>
+    <div>
+        <a class="btn btn-primary" role="button" asp-area="" asp-page="/IdentityProperties">Identity properties</a>
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <a class="btn btn-info" role="button" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+        </div>
+    }
+</div>
