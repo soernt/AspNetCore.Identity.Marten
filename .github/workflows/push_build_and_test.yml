@@ -3,12 +3,14 @@ name: BuildAndTest
 on:
   push:
   pull_request:
-
+  
 jobs:
-  build:
-
+  buildAndTest:
     runs-on: ubuntu-20.04
-
+    defaults:
+      run:
+        working-directory: ./app
+        
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
