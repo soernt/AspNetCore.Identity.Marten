@@ -46,11 +46,11 @@ jobs:
     - name: Build Release version
       run: dotnet build --no-restore --configuration Release /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}
       
-#    - name: Run Tests
-#      run: dotnet test --configuration Release --no-restore --verbosity normal --collect:"XPlat Code Coverage" --settings Marten.AspNetCore.Identity.Tests/coverlet.runsettings
+    - name: Run Tests
+      run: dotnet test --no-restore --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --settings Marten.AspNetCore.Identity.Tests/coverlet.runsettings
 
     - name: Pack
-      run: dotnet pack --no-build --output ./output --configuration Release /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      run: dotnet pack --no-restore --no-build --configuration Release /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }} --output ./output 
 
     - name: Upload Package to job as artificat
       uses: actions/upload-artifact@v2
@@ -61,7 +61,7 @@ jobs:
         if-no-files-found: error
 
     - name: Upload Package to release
-      # if: contains(github.ref, 'main')
+      if: contains(github.ref, 'main')
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -72,5 +72,5 @@ jobs:
         overwrite: true
 
     - name: Upload Package to nuget
-      # if: contains(github.ref, 'main')
+      if: contains(github.ref, 'main')
       run: dotnet nuget push ./output/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key ${{ secrets.NUGET_KEY }}
