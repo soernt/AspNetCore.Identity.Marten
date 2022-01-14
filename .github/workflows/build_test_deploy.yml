@@ -1,0 +1,76 @@
+name: Build, test and deploy
+
+on:
+  push:
+  pull_request:
+
+env:
+  # Stop wasting time caching packages
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Disable sending usage data to Microsoft
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+  # Official NuGet Feed settings
+  NUGET_FEED: https://api.nuget.org/v3/index.json
+
+jobs:
+  build_test_deploy:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./source
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0        
+
+    - name: Setup GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.11
+      with:
+        versionSpec: '5.8.1'
+
+    - name: Determine Version
+      id:   gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.7            
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build Release version
+      run: dotnet build --no-restore --configuration Release /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}
+      
+#    - name: Run Tests
+#      run: dotnet test --configuration Release --no-restore --verbosity normal --collect:"XPlat Code Coverage" --settings Marten.AspNetCore.Identity.Tests/coverlet.runsettings
+
+    - name: Pack
+      run: dotnet pack --no-build --output ./output --configuration Release /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+
+    - name: Upload Package to job as artificat
+      uses: actions/upload-artifact@v2
+      with:
+        name: "Marten.AspNetCore.Identity-${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        # Does not support current "working-directory" settings
+        path: source/output/*.nupkg
+        if-no-files-found: error
+
+    - name: Upload Package to release
+      # if: contains(github.ref, 'main')
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file_glob: true
+        # Does not support current "working-directory" settings
+        file: source/output/*.nupkg
+        tag: "${{ steps.gitversion.outputs.fullSemVer }}"
+        overwrite: true
+
+    - name: Upload Package to nuget
+      # if: contains(github.ref, 'main')
+      run: dotnet nuget push ./output/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key ${{ secrets.NUGET_KEY }}
