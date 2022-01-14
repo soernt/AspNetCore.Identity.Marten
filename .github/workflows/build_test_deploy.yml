@@ -62,7 +62,7 @@ jobs:
         path: /output/*.nupkg
 
     - name: Upload Package to release
-      if: contains(github.ref, 'main')
+      # if: contains(github.ref, 'main')
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -72,5 +72,5 @@ jobs:
         overwrite: true
 
     - name: Upload Package to nuget
-      if: contains(github.ref, 'main')
-      run: dotnet nuget push /output/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key ${{ secrets.NUGET_KEY }}
+      # if: contains(github.ref, 'main')
+      run: dotnet nuget push output/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key ${{ secrets.NUGET_KEY }}

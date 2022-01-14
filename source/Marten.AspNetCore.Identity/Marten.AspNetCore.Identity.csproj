@@ -16,10 +16,9 @@
         <PackageTags>aspnetcore marten identity membership</PackageTags>
         <RepositoryUrl>https://github.com/soernt/AspNetCore.Identity.Marten</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
-        <!-- Versioning -->
-        <PackageVersion>0.1.0</PackageVersion>
-        <Version>0.1.0</Version>
-        <FileVersion>0.1.0</FileVersion>        
+        <!-- 
+            Versioning  will be handled by the GithHub Workflow
+        -->
     </PropertyGroup>
 
     <PropertyGroup>
