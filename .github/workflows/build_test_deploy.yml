@@ -59,7 +59,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: "Marten.AspNetCore.Identity-${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-        path: ./output/*.nupkg
+        path: /output/*.nupkg
 
     - name: Upload Package to release
       if: contains(github.ref, 'main')
@@ -67,10 +67,10 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file_glob: true
-        file: ./output/*.nupkg
+        file: /output/*.nupkg
         tag: "${{ steps.gitversion.outputs.fullSemVer }}"
         overwrite: true
 
     - name: Upload Package to nuget
       if: contains(github.ref, 'main')
-      run: dotnet nuget push ./output/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key ${{ secrets.NUGET_KEY }}
+      run: dotnet nuget push /output/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key ${{ secrets.NUGET_KEY }}
