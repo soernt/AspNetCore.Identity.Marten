@@ -56,7 +56,8 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: "Marten.AspNetCore.Identity-${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-        path: source/output/*.*
+        # Does not support current "working-directory" settings
+        path: source/output/*.nupkg
         if-no-files-found: error
 
     - name: Upload Package to release
@@ -65,7 +66,8 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file_glob: true
-        file: ./output/*.nupkg
+        # Does not support current "working-directory" settings
+        file: source/output/*.nupkg
         tag: "${{ steps.gitversion.outputs.fullSemVer }}"
         overwrite: true
 
