@@ -6,7 +6,6 @@
 
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <!-- Nuget Package properties -->
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Marten.AspNetCore.Identity</PackageId>
         <Authors>Sörnt Poppe</Authors>
         <PackageTitle>Marten.AspNetCore.Identity</PackageTitle>
