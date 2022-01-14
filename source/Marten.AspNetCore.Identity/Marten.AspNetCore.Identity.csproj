@@ -10,6 +10,7 @@
         <Authors>Sörnt Poppe</Authors>
         <PackageTitle>Marten.AspNetCore.Identity</PackageTitle>
         <Description>A Marten UserStore and RoleStore adapter for Microsoft.Extensions.Identity.Core 6.</Description>
+         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>http://www.opensource.org/licenses/mit-license.php</PackageProjectUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Copyright>Copyright 2021 (c) Sörnt Poppe. All rights reserved.</Copyright>
@@ -20,6 +21,10 @@
             Versioning  will be handled by the GithHub Workflow
         -->
     </PropertyGroup>
+
+     <ItemGroup>
+        <None Include="../../README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
 
     <PropertyGroup>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
