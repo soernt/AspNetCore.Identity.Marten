@@ -10,8 +10,9 @@
         <Authors>Sörnt Poppe</Authors>
         <PackageTitle>Marten.AspNetCore.Identity</PackageTitle>
         <Description>A Marten UserStore and RoleStore adapter for Microsoft.Extensions.Identity.Core 6.</Description>
-         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageProjectUrl>http://www.opensource.org/licenses/mit-license.php</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/soernt/AspNetCore.Identity.Marten</PackageProjectUrl>
+        <license type="expression">MIT</license>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Copyright>Copyright 2021 (c) Sörnt Poppe. All rights reserved.</Copyright>
         <PackageTags>aspnetcore marten identity membership</PackageTags>
