@@ -56,7 +56,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: "Marten.AspNetCore.Identity-${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-        path: output/*.*
+        path: source/output/*.*
         if-no-files-found: error
 
     - name: Upload Package to release
