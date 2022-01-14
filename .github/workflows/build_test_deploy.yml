@@ -47,7 +47,7 @@ jobs:
       run: dotnet build --configuration Release  --no-restore
       
     - name: Run Tests
-      run: dotnet test --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --settings Marten.AspNetCore.Identity.Tests/coverlet.runsettings
+      run: dotnet test --configuration Release -no-restore --verbosity normal --collect:"XPlat Code Coverage" --settings Marten.AspNetCore.Identity.Tests/coverlet.runsettings
 
     - name: Build Release version
       run: dotnet build --no-restore --configuration Release /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}
