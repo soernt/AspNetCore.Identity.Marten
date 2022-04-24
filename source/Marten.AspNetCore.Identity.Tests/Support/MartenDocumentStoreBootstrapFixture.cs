@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using Npgsql;
-using Weasel.Postgresql;
+using Weasel.Core;
 using Xunit;
 
 namespace Marten.AspNetCore.Identity.Tests.Support
